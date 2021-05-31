@@ -8,12 +8,10 @@ public class Test_WEB_001 {
 
     @BeforeAll
     static void beforeAll(){
-
     }
 
     @BeforeEach
     void beforeEach(){
-
     }
 
     @Test
