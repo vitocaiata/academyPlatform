@@ -1,0 +1,40 @@
+#Generated files
+bin/
+gen/
+out/
+target/
+logs/
+screenshot/
+driver/
+report/
+apps/
+
+# Node DIR
+node_modules/
+*/node_modules
+/package-log.json
+
+# Java
+.mtj.tmp/
+*.class
+*.jar
+*.war
+*.ear
+.nar
+hs_err_pid
+
+# Files
+*.log
+*.dex
+*.apk
+*.exe
+*.jks
+
+
+# IntelliJ
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
