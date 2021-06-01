@@ -54,6 +54,6 @@ public class TestEbay {
 
     @AfterAll
     static void tearDownAll() {
-        //ManagementDriver.stopDriver();
+        ManagementDriver.stopDriver();
     }
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.Properties;
 
 public class IlMeteoSteps {
@@ -30,4 +31,9 @@ public class IlMeteoSteps {
             System.out.println("Banner non trovato.");
         }
     }
+
+    public List<WebElement> getMenuTabs(Properties prop) {
+        return driver.findElements(By.xpath("//*[@class=\"tab\"]/span"));
+    }
 }
+

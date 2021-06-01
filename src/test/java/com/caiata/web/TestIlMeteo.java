@@ -84,7 +84,7 @@ public class TestIlMeteo{
     @DisplayName("controllo titoli con csv")
     @CsvSource({"tab1","tab2","tab3","tab4","tab5","tab6","tab7","tab8","tab9","tab10","tab11","tab12","tab13","tab14"})
     @Order(3)
-    void Test_003_Controllo(String tab){
+    void test_003_Controllo(String tab){
         String nome;
         driver.get(webProp.getProperty("ilmeteo.url"));
         try {
@@ -93,19 +93,37 @@ public class TestIlMeteo{
             webElement.click();
             Thread.sleep(500);
             assertTrue(driver.findElement(By.id(webProp.getProperty("id.page.title"))).isEnabled());
-            if (!nome.equals("Home"))
+            if (!nome.equals("Home")) {
                 assertTrue(driver.findElement(By.id(webProp.getProperty("id.page.title"))).getText().toLowerCase().contains(nome.toLowerCase()));
-        }catch (InterruptedException e) {
+            }
+            }catch (InterruptedException e) {
             System.out.println("Banner non Trovato");
         }
     }
 
-        @AfterEach
-        void tearDown() {
-        }
+    @Order(4)
+    @Test
+    @DisplayName("controllo titoli con lista")
+    void test_004() throws InterruptedException {
+        driver.get(webProp.getProperty("ilmeteo.url"));
+        for(int i = 2; i < steps.getMenuTabs(webProp).size(); i++){
+            webElement = steps.getMenuTabs(webProp).get(i);
+            webElement = driver.findElement(By.id("tab"+i));
+            webElement.click();
 
-        @AfterAll
-        static void tearDownAll() {
-            ManagementDriver.stopDriver();
+            webElement = driver.findElement(By.id("tab" + i));
+            Thread.sleep(500);
+            WebElement tmp = driver.findElement(By.id(webProp.getProperty("id.page.title")));
+            assertTrue(tmp.getText().toLowerCase().contains(webElement.getText().toLowerCase()));
+
+            System.out.println("Titolo superiore : " + webElement.getText());
+            System.out.println("Titolo stampato sotto : " + tmp.getText());
         }
     }
+
+    @AfterEach
+    void tearDown() { }
+
+    @AfterAll
+    static void tearDownAll() {ManagementDriver.stopDriver();}
+}
