@@ -11,11 +11,11 @@ public class Utility {
 
     public Properties loadProp(String propName){
 
-        String appPropPath = RESOURCES_PATH  + File.separator + "properties" + File.separator + propName + ".properties";
+        String propPath = RESOURCES_PATH  + File.separator + "properties" + File.separator + propName + ".properties";
         Properties prop = new Properties();
 
         try{
-            prop.load(new FileInputStream(appPropPath));
+            prop.load(new FileInputStream(propPath));
         }catch(IOException e){
             e.printStackTrace();
             System.out.println("File " + propName + " non trovato.");
