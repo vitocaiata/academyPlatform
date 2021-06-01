@@ -7,3 +7,4 @@
 - Creazioe `TestEbay`
 - Divisione `web propeerties e ebay properties`
 - Aggiunto `meteoSteps`
+- Aggiunto `Test per i titoli`
