@@ -3,7 +3,7 @@ package com.caiata;
 import java.io.File;
 
 public class GlobalParameters {
-    public static final String PACKAGE = "com.palmieri";
+    public static final String PACKAGE = "com.caiata";
 
     //EXT_SYSTEM
     public static final String EXT_JPG                      =                    ".jpg";
@@ -16,7 +16,7 @@ public class GlobalParameters {
     public static final String EXT_LOG                      =                    ".log";
     public static final String EXT_JAVA                     =                   ".java";
 
-
+    //HTTP-HTTPS
     public static final String HTTP                         =                    "http";
     public static final String HTTPS                        =                   "https";
 
@@ -37,7 +37,5 @@ public class GlobalParameters {
     public static final String CHROME_DRIVER_PATH           =               DRIVER_DIR + File.separator + "chrome" + File.separator + WINDOWS_SO + File.separator + "chromedriver" + EXT_EXE;
     public static final String BASE_PATH_APP                =               RESOURCES_PATH + File.separator + "apps";
     public static final String PROPERTIES_PATH              =               RESOURCES_PATH + File.separator + "properties";
-
-    //
 
 }
