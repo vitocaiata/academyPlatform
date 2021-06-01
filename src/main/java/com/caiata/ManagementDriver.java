@@ -1,5 +1,6 @@
 package com.caiata;
 
+import org.apache.log4j.BasicConfigurator;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,8 +13,13 @@ public class ManagementDriver {
 
     public static void startDriver(){
         System.setProperty("webdriver.chrome.driver",CHROME_DRIVER_PATH);
+        System.setProperty("org.freemarker.loggerLibrary","none");
         driver = new ChromeDriver();
         new ChromeOptions().setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        System.err.close();
+        System.setErr(System.out);
+        new Utility().loadProp("log4j");
+        BasicConfigurator.configure();
 
     }
 
