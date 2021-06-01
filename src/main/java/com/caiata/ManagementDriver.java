@@ -20,7 +20,6 @@ public class ManagementDriver {
         System.setErr(System.out);
         new Utility().loadProp("log4j");
         BasicConfigurator.configure();
-
     }
 
     public static WebDriver getDriver(){
