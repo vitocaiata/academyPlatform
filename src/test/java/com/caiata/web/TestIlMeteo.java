@@ -92,6 +92,7 @@ public class TestIlMeteo{
             nome = webElement.getText();
             webElement.click();
             Thread.sleep(500);
+            assertTrue(driver.findElement(By.id(webProp.getProperty("id.page.title"))).isEnabled());
             if (!nome.equals("Home"))
                 assertTrue(driver.findElement(By.id(webProp.getProperty("id.page.title"))).getText().toLowerCase().contains(nome.toLowerCase()));
         }catch (InterruptedException e) {
