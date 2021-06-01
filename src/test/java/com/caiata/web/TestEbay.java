@@ -8,11 +8,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
 import java.util.Properties;
-
 import static org.junit.jupiter.api.Assertions.fail;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestEbay {
 
     static private WebDriver driver = null;
@@ -25,13 +24,11 @@ public class TestEbay {
         ManagementDriver.startDriver();
         driver = ManagementDriver.getDriver();
         steps = new EbaySteps();
-
     }
 
     @BeforeEach
     void beforeEach() {
     }
-
 
     @Order(1)
     @ParameterizedTest(name = "q = {0}")

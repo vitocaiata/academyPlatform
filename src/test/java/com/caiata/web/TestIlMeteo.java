@@ -16,6 +16,7 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestIlMeteo{
 
         static private WebElement webElement;
