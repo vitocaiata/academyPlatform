@@ -6,13 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static com.caiata.GlobalParameters.CHROME_DRIVER_PATH;
+import static com.caiata.GlobalParameters.CHROME_DRIVER_PATH_WIN;
 
 public class ManagementDriver {
     static ChromeDriver driver;
 
     public static void startDriver(){
-        System.setProperty("webdriver.chrome.driver",CHROME_DRIVER_PATH);
+        System.setProperty("webdriver.chrome.driver",CHROME_DRIVER_PATH_WIN);
         System.setProperty("org.freemarker.loggerLibrary","none");
         driver = new ChromeDriver();
         new ChromeOptions().setPageLoadStrategy(PageLoadStrategy.NORMAL);

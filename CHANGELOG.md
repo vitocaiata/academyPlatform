@@ -3,3 +3,4 @@
 - Creazione gestione Driver
 - Creazione Simulazioni tasti navigazione broswer
 - Creazione Test Window Broswer
+- Aggiornato Global Parameters
