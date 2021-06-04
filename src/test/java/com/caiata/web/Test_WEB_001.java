@@ -1,7 +1,7 @@
 package com.caiata.web;
 
-import com.caiata.ManagementDriver;
-import com.caiata.Utility;
+import com.caiata.utils.ManagementDriver;
+import com.caiata.utils.Utility;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import java.util.Properties;

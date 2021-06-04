@@ -1,6 +1,6 @@
 package com.caiata.steps;
 
-import com.caiata.ManagementDriver;
+import com.caiata.utils.ManagementDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;

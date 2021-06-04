@@ -1,4 +1,4 @@
-package com.caiata;
+package com.caiata.utils;
 
 import org.apache.log4j.BasicConfigurator;
 import org.openqa.selenium.PageLoadStrategy;
@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static com.caiata.GlobalParameters.CHROME_DRIVER_PATH_WIN;
+import static com.caiata.utils.GlobalParameters.CHROME_DRIVER_PATH_WIN;
 
 public class ManagementDriver {
     static ChromeDriver driver;

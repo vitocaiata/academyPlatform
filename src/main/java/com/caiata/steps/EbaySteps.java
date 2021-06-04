@@ -1,6 +1,7 @@
 package com.caiata.steps;
 
-import com.caiata.ManagementDriver;
+import com.caiata.utils.ManagementDriver;
+import com.caiata.utils.ModelloEbay;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -10,10 +11,12 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.*;
 
+import javax.xml.bind.Element;
+import java.lang.reflect.Array;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.function.Function;
 
 public class EbaySteps {
 
@@ -70,4 +73,31 @@ public class EbaySteps {
             }
         }
     }
+
+    public String[] getMenuCategory(Properties webProp){
+        List<WebElement> listaElementi = driver.findElements(By.id(webProp.getProperty("id.select.category")));
+        String[] tmp = new String[listaElementi.size()];
+
+        for(int i = 0; i<listaElementi.size() ; i++){
+                tmp[i] = listaElementi.get(i).getText();
+        }
+        return tmp;
+    }
+
+
+    public ArrayList<ModelloEbay> getElementi(Properties prop){
+        ArrayList<ModelloEbay> listaModello = new ArrayList<>();
+        for(WebElement element : driver.findElement(By.xpath(prop.getProperty("xpath.div"))).findElements(By.className("s-item"))){
+            listaModello.add(new ModelloEbay(element.findElement(By.tagName("h3")).getText(),
+                    element.findElement(By.className("s-item__subtitle")).getText(),
+                            element.findElement(By.className("s-item__detail--primary")).getText(),
+                                    element.findElement(By.tagName("img")).getAttribute("src")));
+        }
+        return listaModello;
+    }
+
+
+
+
+
 }

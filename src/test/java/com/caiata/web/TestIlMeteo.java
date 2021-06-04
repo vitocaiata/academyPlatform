@@ -1,8 +1,8 @@
 package com.caiata.web;
 
 import com.caiata.steps.IlMeteoSteps;
-import com.caiata.ManagementDriver;
-import com.caiata.Utility;
+import com.caiata.utils.ManagementDriver;
+import com.caiata.utils.Utility;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,7 +14,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Properties;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;

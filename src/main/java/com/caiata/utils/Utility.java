@@ -1,11 +1,11 @@
-package com.caiata;
+package com.caiata.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import static com.caiata.GlobalParameters.RESOURCES_PATH;
+import static com.caiata.utils.GlobalParameters.RESOURCES_PATH;
 
 public class Utility {
 
