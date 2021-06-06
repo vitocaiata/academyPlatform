@@ -14,3 +14,5 @@ _`**VERSIONE 1.0**`_
 - Aggiunto `Test per la selezione delle categorie Ebay`
 - Aggiunti `fluent wait e webDriverWait`
 - Aggiunto `ModelloEbay`
+- Aggiunto `Test Colore search button`
+- Aggiunto `Test posizione su google Maps e su demons`

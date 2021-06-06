@@ -2,10 +2,14 @@ package com.caiata.steps;
 
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.ModelloEbay;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,15 +36,15 @@ public class EbaySteps {
 
     public void closeBanner(Properties prop){
         try {
-            webElement = new WebDriverWait(driver, Duration.ofSeconds(5))
-                    .until(driver -> driver.findElement(By.id(prop.getProperty("id.banner.gdp"))));
-            //Thread.sleep(4000);
-            //webElement = driver.findElement(By.id(prop.getProperty("id.banner.gdp")));
+            //webElement = new WebDriverWait(driver, Duration.ofSeconds(5))
+              //      .until(driver -> driver.findElement(By.id(prop.getProperty("id.banner.gdp"))));
+            Thread.sleep(4000);
+            webElement = driver.findElement(By.id(prop.getProperty("id.banner.gdp")));
             if (webElement.isDisplayed()) {
                 driver.findElement(By.id(prop.getProperty("id.btn.gdp.accept"))).click();
                 System.out.println("Banner trovato e chiuso");
             }
-        }catch(NoSuchElementException | TimeoutException  e){
+        }catch(NoSuchElementException | TimeoutException | InterruptedException e){
             System.out.println("Banner non trovato.");
         }
     }

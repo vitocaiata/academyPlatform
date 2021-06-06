@@ -1,6 +1,7 @@
 package com.caiata.web;
 
 import com.caiata.utils.ManagementDriver;
+import com.caiata.utils.Posizione;
 import com.caiata.utils.Utility;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
@@ -14,7 +15,7 @@ public class Test_WEB_001 {
     //static private ManagementDriver managementDriver = null;
     static private WebDriver driver = null;
     static private Properties webProp = null;
-
+    static private Posizione posizione =  new Posizione();;
 
     @BeforeAll
     static void beforeAll() {
@@ -38,22 +39,22 @@ public class Test_WEB_001 {
         ManagementDriver.getDriver().get(webProp.getProperty("google.url"));
         ManagementDriver.getDriver().get(webProp.getProperty("ebay.url"));
 
-        title = ManagementDriver.getDriver().getTitle();
-        currentURL = ManagementDriver.getDriver().getCurrentUrl();
+        title = driver.getTitle();
+        currentURL = driver.getCurrentUrl();
 
         System.out.println("titolo = " + title);
         System.out.println("URL = " + currentURL);
 
-        ManagementDriver.getDriver().navigate().back();
+        driver.navigate().back();
 
-        title = ManagementDriver.getDriver().getTitle();
-        currentURL = ManagementDriver.getDriver().getCurrentUrl();
+        title = driver.getTitle();
+        currentURL = driver.getCurrentUrl();
 
         System.out.println("titolo = " + title);
         System.out.println("URL = " + currentURL);
 
-        ManagementDriver.getDriver().navigate().forward();
-        ManagementDriver.getDriver().navigate().refresh();
+        driver.navigate().forward();
+        driver.navigate().refresh();
     }
 
     @Order(2)
@@ -94,6 +95,23 @@ public class Test_WEB_001 {
         ManagementDriver.getDriver().close();
         ManagementDriver.getDriver().switchTo().window(handleWin);
     }
+
+    @Order(3)
+    @Test
+    @DisplayName("test posizione Google Maps")
+    void test_003() throws InterruptedException {
+        posizione.geoLocationTest(webProp);
+
+    }
+
+    @Order(4)
+    @Test
+    @DisplayName("test posizione demos")
+    void test_004(){
+        posizione.geolocalizza();
+
+    }
+
 
     @AfterEach
     void tearDown() {

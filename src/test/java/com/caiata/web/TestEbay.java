@@ -10,8 +10,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.Color;
 
-import java.util.ArrayList;
+
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,6 +25,8 @@ public class TestEbay {
     static private WebDriver driver = null;
     static private Properties webProp = null;
     static private EbaySteps steps = null;
+
+
 
     @BeforeAll
     static void beforeAll() {
@@ -67,7 +70,7 @@ public class TestEbay {
 
     @Order(3)
     @ParameterizedTest(name = "q = {0} , categoria = {0}")
-    @CsvSource({"iphone, cell phone, xpath.category.selected.cell" , "ipad, tablet,xpath.category.selected.tablet"})
+    @CsvSource({"iphone, cell phone, xpath.category.selected.cell" , "ipad, tablet, xpath.category.selected.tablet"})
     @DisplayName("controllare selezione categoria")
     void test_003(String q, String categoria, String key) {
         driver.get(webProp.getProperty("ebay.url"));
@@ -100,6 +103,19 @@ public class TestEbay {
         steps.search(webProp, q);
         modello.stampaElementi(steps.getElementi(webProp));
     }
+    
+    @Order(6)
+    @Test
+    @DisplayName("test colore")
+    public void test_006(){
+        driver.get(webProp.getProperty("ebay.url"));
+        steps.closeBanner(webProp);
+        Color searchButtonBackgroundColour = Color.fromString(driver.findElement(By.id(webProp.getProperty("id.btn.search"))).getCssValue("background-color"));
+        assert searchButtonBackgroundColour.asHex().equals("#3665f3");
+    }
+
+
+
 
     @AfterEach
     void tearDown() {
