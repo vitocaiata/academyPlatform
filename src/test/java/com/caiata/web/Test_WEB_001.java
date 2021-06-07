@@ -1,10 +1,15 @@
 package com.caiata.web;
 
+import com.caiata.utils.DefaulChromeOptions;
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.Posizione;
 import com.caiata.utils.Utility;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import java.util.Properties;
 
 
@@ -15,13 +20,20 @@ public class Test_WEB_001 {
     //static private ManagementDriver managementDriver = null;
     static private WebDriver driver = null;
     static private Properties webProp = null;
-    static private Posizione posizione =  new Posizione();;
+    static private Posizione posizione = null;
+    static private DefaulChromeOptions defaulChromeOptions;
 
     @BeforeAll
     static void beforeAll() {
-        webProp = new Utility().loadProp("web");
-        ManagementDriver.startDriver();
+        defaulChromeOptions = new DefaulChromeOptions(new ChromeOptions());
+        defaulChromeOptions.addArguments("--window-size=375,812");
+        defaulChromeOptions.addArguments("--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1");
+
+        ManagementDriver.startDriver(defaulChromeOptions);
+        posizione = new Posizione();
         driver = ManagementDriver.getDriver();
+        //webProp = new Utility().loadProp("web");
+        webProp = new Utility().loadProp("mobile");
 
     }
 
@@ -112,6 +124,17 @@ public class Test_WEB_001 {
 
     }
 
+    @Order(5)
+    @ParameterizedTest(name = "q = {0}")
+    @CsvSource({"iphone"})
+    @DisplayName("test ricerca su google")
+    void test_005(String q) throws InterruptedException {
+        driver.get(webProp.getProperty("google.url"));
+        posizione.accettaCookie(webProp);
+        posizione.ricerca(webProp,q);
+        //new Utility().getScreen();
+
+    }
 
     @AfterEach
     void tearDown() {
@@ -119,7 +142,7 @@ public class Test_WEB_001 {
 
     @AfterAll
     void tearDownAll() {
-        ManagementDriver.stopDriver();
+        //ManagementDriver.stopDriver();
     }
 
 }

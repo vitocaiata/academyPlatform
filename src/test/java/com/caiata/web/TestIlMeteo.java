@@ -1,6 +1,7 @@
 package com.caiata.web;
 
 import com.caiata.steps.IlMeteoSteps;
+import com.caiata.utils.DefaulChromeOptions;
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.Utility;
 import org.junit.jupiter.api.*;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,8 +30,8 @@ public class TestIlMeteo{
 
         @BeforeAll
         static void beforeAll() {
+            ManagementDriver.startDriver(new DefaulChromeOptions(new ChromeOptions()));
             webProp = new Utility().loadProp("ilmeteo");
-            ManagementDriver.startDriver();
             driver = ManagementDriver.getDriver();
             steps = new IlMeteoSteps();
            // webElement = new WebDriverWait(driver, Duration.ofSeconds(3)).until(driver -> driver.findElement(By.id(("tab" + 1))));

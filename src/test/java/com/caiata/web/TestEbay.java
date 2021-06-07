@@ -1,6 +1,7 @@
 package com.caiata.web;
 
 import com.caiata.steps.EbaySteps;
+import com.caiata.utils.DefaulChromeOptions;
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.ModelloEbay;
 import com.caiata.utils.Utility;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.Color;
 
 
@@ -31,7 +33,7 @@ public class TestEbay {
     @BeforeAll
     static void beforeAll() {
         webProp = new Utility().loadProp("ebay");
-        ManagementDriver.startDriver();
+        ManagementDriver.startDriver(new DefaulChromeOptions(new ChromeOptions()));
         driver = ManagementDriver.getDriver();
         steps = new EbaySteps();
     }
@@ -113,9 +115,6 @@ public class TestEbay {
         Color searchButtonBackgroundColour = Color.fromString(driver.findElement(By.id(webProp.getProperty("id.btn.search"))).getCssValue("background-color"));
         assert searchButtonBackgroundColour.asHex().equals("#3665f3");
     }
-
-
-
 
     @AfterEach
     void tearDown() {

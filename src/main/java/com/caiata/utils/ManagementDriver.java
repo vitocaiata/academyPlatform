@@ -7,14 +7,20 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import static com.caiata.utils.GlobalParameters.CHROME_DRIVER_PATH_WIN;
+import static com.caiata.utils.GlobalParameters.MY_SO;
 
 public class ManagementDriver {
     static ChromeDriver driver;
 
-    public static void startDriver(){
-        System.setProperty("webdriver.chrome.driver",CHROME_DRIVER_PATH_WIN);
-        System.setProperty("org.freemarker.loggerLibrary","none");
-        driver = new ChromeDriver();
+    public static void startDriver(DefaulChromeOptions defaultChromeOptions){
+        if(MY_SO.contains("Windows")) {
+            System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH_WIN);
+        }else {
+            System.setProperty("org.freemarker.loggerLibrary", "none");
+        }
+
+        driver = new ChromeDriver(defaultChromeOptions);
+
         new ChromeOptions().setPageLoadStrategy(PageLoadStrategy.NORMAL);
         System.err.close();
         System.setErr(System.out);
