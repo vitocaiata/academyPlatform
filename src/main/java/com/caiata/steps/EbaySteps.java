@@ -2,6 +2,7 @@ package com.caiata.steps;
 
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.ModelloEbay;
+import com.caiata.utils.Utility;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class EbaySteps {
         webElement = driver.findElement(By.name(prop.getProperty("name.input.search")));
         webElement.clear();
         webElement.sendKeys(q);
-        driver.findElement(By.id(prop.getProperty("id.btn.search"))).click();
+        webElement.sendKeys(Keys.ENTER);
     }
 
     public void closeBanner(Properties prop){
@@ -100,6 +101,28 @@ public class EbaySteps {
         return listaModello;
     }
 
+    public ArrayList<ModelloEbay> getElementiMobile(Properties prop){
+        ArrayList<ModelloEbay> listaModello = new ArrayList<>();
+        for(WebElement element : driver.findElement(By.xpath(prop.getProperty("xpath.div"))).findElements(By.className("s-item"))){
+            listaModello.add(new ModelloEbay(element.findElement(By.tagName("h3")).getText(),
+                    element.findElement(By.className(prop.getProperty("class.subtitle"))).getText(),
+                    element.findElement(By.className(prop.getProperty("class.prize"))).getText(),
+                    element.findElement(By.tagName("img")).getAttribute("src")));
+        }
+        return listaModello;
+    }
+
+    public void clickPage2(Properties prop) throws InterruptedException {
+        driver.findElement(By.xpath(prop.getProperty("xpath.page2"))).click();
+        Thread.sleep(4000);
+        new Utility().getScreen();
+    }
+
+    public void clickPage3(Properties prop) throws InterruptedException {
+        driver.findElement(By.xpath(prop.getProperty("xpath.page3"))).click();
+        Thread.sleep(4000);
+        new Utility().getScreen();
+    }
 
 
 

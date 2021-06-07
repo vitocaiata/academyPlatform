@@ -17,3 +17,4 @@ _`**VERSIONE 1.0**`_
 - Aggiunto `Test Colore search button`
 - Aggiunto `Test posizione su google Maps e su demons`
 - Aggiunto `mobile properties`
+- Aggiunto `test mobile per movimento pagina`
