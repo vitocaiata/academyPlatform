@@ -9,8 +9,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.Color;
 
@@ -18,8 +17,7 @@ import org.openqa.selenium.support.Color;
 
 import java.util.Properties;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestEbay {
@@ -30,6 +28,7 @@ public class TestEbay {
     static private EbaySteps steps = null;
     static private DefaulChromeOptions defaulChromeOptions;
     static private boolean mobile = false;
+    private float val = 0;
 
     @BeforeAll
     static void beforeAll() {
@@ -56,6 +55,7 @@ public class TestEbay {
     @Order(7)
     @ParameterizedTest(name = "q = {0}")
     @CsvSource({"iphone,3"})
+    @Tag("mobile")
     @DisplayName("controllare esistenza prodotto ricercato e muovi tra le pagine")
     void test_007(String q, String pgn) throws InterruptedException {
         driver.get(webProp.getProperty("ebay.url"));
@@ -143,6 +143,7 @@ public class TestEbay {
     @Order(8)
     @ParameterizedTest(name = "q = {0} , categoria = {0}")
     @CsvSource({"iphone"})
+    @Tag("mobile")
     @DisplayName("Stampa di tutti i risultati.")
     void test_008(String q) {
         driver.get(webProp.getProperty("ebay.url"));
@@ -161,12 +162,60 @@ public class TestEbay {
         assert searchButtonBackgroundColour.asHex().equals("#3665f3");
     }
 
+    @Order(9)
+    @ParameterizedTest(name = "q = {0} , categoria = {0}")
+    @CsvSource({"pluto , cognome, semoh62083@jmpant.com, A12345!"})
+    @Tag("mobile")
+    @DisplayName("registrazione su ebay")
+    void test_009(String nome, String cognome, String email, String password) throws InterruptedException {
+        driver.get(webProp.getProperty("ebay.url"));
+        //steps.closeBanner(webProp);
+        Thread.sleep(2000);
+        driver.findElement(By.xpath(webProp.getProperty("menu"))).click();
+        Thread.sleep(3000);
+        driver.findElement(By.xpath(webProp.getProperty("button.register"))).click();
+        Thread.sleep(3000);
+        driver.findElement(By.id(webProp.getProperty("first.name"))).sendKeys(nome);
+        Thread.sleep(3000);
+        driver.findElement(By.id(webProp.getProperty("last.name"))).sendKeys(cognome);
+        Thread.sleep(3000);
+        driver.findElement(By.id(webProp.getProperty("email.id"))).sendKeys(email);
+        Thread.sleep(3000);
+        driver.findElement(By.id(webProp.getProperty("password.id"))).sendKeys(password);
+        Thread.sleep(3000);
+        driver.findElement(By.xpath(webProp.getProperty("button.create.account"))).click();
+    }
+
+    @Order(10)
+    @ParameterizedTest(name = "q = {0}")
+    @CsvSource({"iphone"})
+    @DisplayName("aggiungi al carrello")
+    void test_010(String q) throws InterruptedException {
+        driver.get(webProp.getProperty("ebay.url"));
+        //steps.closeBanner(webProp);
+        steps.search(webProp, q);
+        boolean r = steps.addCart(webProp);
+        Thread.sleep(2000);
+        assertTrue(r);
+    }
+
+    @Order(10)
+    @ParameterizedTest(name = "q = {0}")
+    @CsvSource({"iphone"})
+    @DisplayName("aggiungi al carrello")
+    void test_011(String q) throws InterruptedException {
+        driver.get(webProp.getProperty("ebay.url"));
+        //steps.closeBanner(webProp);
+        steps.search(webProp, q);
+        steps.add(webProp);
+    }
+
     @AfterEach
     void tearDown() {
     }
 
     @AfterAll
     static void tearDownAll() {
-        ManagementDriver.stopDriver();
+        //ManagementDriver.stopDriver();
     }
 }

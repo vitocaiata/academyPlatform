@@ -19,6 +19,10 @@ public class ModelloEbay {
         this.img = img;
     }
 
+    public ModelloEbay(String prezzo) {
+        this.prezzo = prezzo;
+    }
+
     public String getTitolo() {
         return titolo;
     }
@@ -58,6 +62,12 @@ public class ModelloEbay {
             System.out.println(elemento.getPrezzo());
             System.out.println(elemento.getImg());
             System.out.println("------------------");
+        }
+    }
+
+    public void stampaPrezziCart(ArrayList<ModelloEbay> ris){
+        for(ModelloEbay elemento : ris){
+            System.out.println(elemento.getPrezzo());
         }
     }
 }

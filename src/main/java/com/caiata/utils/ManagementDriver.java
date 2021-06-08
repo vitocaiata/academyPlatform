@@ -14,11 +14,8 @@ public class ManagementDriver {
     private static boolean mobile = false;
 
     public static void startDriver(DefaulChromeOptions defaultChromeOptions){
-        if(MY_SO.contains("Windows")) {
             System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH_WIN);
-        }else {
             System.setProperty("org.freemarker.loggerLibrary", "none");
-        }
 
         driver = new ChromeDriver(defaultChromeOptions);
 

@@ -2,22 +2,13 @@ package com.caiata.steps;
 
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.ModelloEbay;
-import com.caiata.utils.Utility;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.*;
-
-import javax.xml.bind.Element;
-import java.lang.reflect.Array;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +16,10 @@ import java.util.Properties;
 
 public class EbaySteps {
 
+    private float val1 = 0;
+    private float val2 = 0;
+    private float somma = 0;
+    private ModelloEbay modello = new ModelloEbay();
     private WebElement webElement;
     private WebDriver driver = ManagementDriver.getDriver();
 
@@ -112,19 +107,86 @@ public class EbaySteps {
         return listaModello;
     }
 
-    public void clickPage2(Properties prop) throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("xpath.page2"))).click();
+    public boolean addCart(Properties prop) throws InterruptedException {
+
+        ArrayList<ModelloEbay> carrello = new ArrayList<>();
+
+        driver.findElement(By.xpath(prop.getProperty("xpath.product"))).click();
+        Thread.sleep(3000);
+
+        carrello.add(new ModelloEbay(
+                driver.findElement(By.className("vi-bin-primary-price__main-price")).getText()
+        ));
+        String prezzo = driver.findElement(By.className("vi-bin-primary-price__main-price")).getText();
+        val1 = Float.parseFloat(prezzo.substring(1));
+        System.out.println("Prezzo del primo articolo : "+val1);
+
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement aggiungi = driver.findElement(By.id(prop.getProperty("id.button.addcart")));
+        js.executeScript("arguments[0].scrollIntoView();", aggiungi);
+        aggiungi.click();
+
+
+        driver.navigate().back();
+        driver.findElement(By.xpath(prop.getProperty("xpath.product2"))).click();
+        Thread.sleep(3000);
+
+        carrello.add(new ModelloEbay(
+                driver.findElement(By.className("vi-bin-primary-price__main-price")).getText()
+        ));
+        String prezzo2 = driver.findElement(By.className("vi-bin-primary-price__main-price")).getText();
+        val2 = Float.parseFloat(prezzo2.substring(1));
+        System.out.println("Prezzo del secondo articolo " + val2);
+
+        aggiungi = driver.findElement(By.id(prop.getProperty("id.button.addcart")));
+        js.executeScript("arguments[0].scrollIntoView();", aggiungi);
+        aggiungi.click();
+
+        somma = val1 + val2;
+        System.out.println("Totale del tuo carrello = " + somma);
+
         Thread.sleep(4000);
-        new Utility().getScreen();
+        driver.findElement(By.xpath(prop.getProperty("xpath.cart.icon"))).click();
+        WebElement cart = driver.findElement(By.xpath(prop.getProperty("xpath.totale.carrello")));
+        js.executeScript("arguments[0].scrollIntoView();", cart);
+
+        String c = driver.findElement(By.xpath(prop.getProperty("xpath.totale.carrello").substring(1))).getText();
+
+        if(somma != Float.parseFloat(c)){
+            return false;
+        }
+        return true;
     }
 
-    public void clickPage3(Properties prop) throws InterruptedException {
-        driver.findElement(By.xpath(prop.getProperty("xpath.page3"))).click();
+    public void add(Properties prop) throws InterruptedException {
+
+        driver.findElement(By.xpath(prop.getProperty("xpath.product"))).click();
+        Thread.sleep(3000);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement aggiungi = driver.findElement(By.id(prop.getProperty("id.button.addcart")));
+        js.executeScript("arguments[0].scrollIntoView();", aggiungi);
+        aggiungi.click();
+        driver.navigate().back();
+
+        driver.findElement(By.xpath(prop.getProperty("xpath.product2"))).click();
+        Thread.sleep(3000);
+        aggiungi = driver.findElement(By.id(prop.getProperty("id.button.addcart")));
+        js.executeScript("arguments[0].scrollIntoView();", aggiungi);
+        aggiungi.click();
+
         Thread.sleep(4000);
-        new Utility().getScreen();
+        driver.findElement(By.xpath(prop.getProperty("xpath.cart.icon"))).click();
+
+        webElement = driver.findElement(By.xpath(prop.getProperty("xpath.search")));
+        webElement.clear();
+        webElement.sendKeys("2");
+        webElement.sendKeys(Keys.ENTER);
+
+
+        Thread.sleep(4000);
+        driver.findElement(By.xpath(prop.getProperty("xpath.btn.rmv"))).click();
     }
-
-
-
 
 }
+

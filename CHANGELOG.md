@@ -18,3 +18,4 @@ _`**VERSIONE 1.0**`_
 - Aggiunto `Test posizione su google Maps e su demons`
 - Aggiunto `mobile properties`
 - Aggiunto `test mobile per movimento pagina`
+- Aggiunto `Aggiunti test su carrello ebay`
