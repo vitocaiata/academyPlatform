@@ -4,14 +4,19 @@ import com.caiata.utils.DefaulChromeOptions;
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.Posizione;
 import com.caiata.utils.Utility;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.File;
 import java.util.Properties;
 
+import static com.caiata.utils.GlobalParameters.*;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -22,6 +27,8 @@ public class Test_WEB_001 {
     static private Properties webProp = null;
     static private Posizione posizione = null;
     static private DefaulChromeOptions defaulChromeOptions;
+    static private ExtentReports extentReports;
+    static private ExtentTest extentTest;
 
     @BeforeAll
     static void beforeAll() {
@@ -35,6 +42,8 @@ public class Test_WEB_001 {
         //webProp = new Utility().loadProp("web");
         webProp = new Utility().loadProp("mobile");
 
+        extentReports = new ExtentReports(REPORT_PATH + File.separator + "report" + EXT_HTML, false);
+        extentReports.loadConfig(new File(REPORT_CONFIG_XML));
     }
 
     @BeforeEach
@@ -119,8 +128,11 @@ public class Test_WEB_001 {
     @Order(4)
     @Test
     @DisplayName("test posizione demos")
-    void test_004(){
+    void test_004(TestInfo testInfo){
+        extentTest = extentReports.startTest(testInfo.getDisplayName());
         posizione.geolocalizza();
+        extentTest.log(LogStatus.INFO, "Apro la mia posizione");
+        extentTest.log(LogStatus.PASS, extentTest.addBase64ScreenShot(Utility.getScreenBase64()));
 
     }
 
@@ -128,21 +140,29 @@ public class Test_WEB_001 {
     @ParameterizedTest(name = "q = {0}")
     @CsvSource({"iphone"})
     @DisplayName("test ricerca su google")
-    void test_005(String q) throws InterruptedException {
+    void test_005(String q, TestInfo testInfo) throws InterruptedException {
+        extentTest = extentReports.startTest(testInfo.getDisplayName());
         driver.get(webProp.getProperty("google.url"));
+        extentTest.log(LogStatus.INFO, "Apro google");
         posizione.accettaCookie(webProp);
+        extentTest.log(LogStatus.INFO, "Accetto i cookie");
         posizione.ricerca(webProp,q);
+        extentTest.log(LogStatus.INFO, "Ricerco iphone");
+        extentTest.log(LogStatus.PASS, "OK",extentTest.addBase64ScreenShot(Utility.getScreenCast()));
+
         //new Utility().getScreen();
 
     }
 
     @AfterEach
     void tearDown() {
+        extentReports.endTest(extentTest);
     }
 
     @AfterAll
     void tearDownAll() {
-        //ManagementDriver.stopDriver();
+        ManagementDriver.stopDriver();
+        extentReports.flush();
     }
 
 }

@@ -30,22 +30,22 @@ public class EbaySteps {
         webElement.sendKeys(Keys.ENTER);
     }
 
-    public void closeBanner(Properties prop){
+    public void closeBanner(Properties prop) {
         try {
             //webElement = new WebDriverWait(driver, Duration.ofSeconds(5))
-              //      .until(driver -> driver.findElement(By.id(prop.getProperty("id.banner.gdp"))));
+            //      .until(driver -> driver.findElement(By.id(prop.getProperty("id.banner.gdp"))));
             Thread.sleep(4000);
             webElement = driver.findElement(By.id(prop.getProperty("id.banner.gdp")));
             if (webElement.isDisplayed()) {
                 driver.findElement(By.id(prop.getProperty("id.btn.gdp.accept"))).click();
                 System.out.println("Banner trovato e chiuso");
             }
-        }catch(NoSuchElementException | TimeoutException | InterruptedException e){
+        } catch (NoSuchElementException | TimeoutException | InterruptedException e) {
             System.out.println("Banner non trovato.");
         }
     }
 
-    public void closeBannerFW(Properties prop){
+    public void closeBannerFW(Properties prop) {
         try {
             Wait<WebDriver> wait = new FluentWait<>(driver)
                     .withTimeout(Duration.ofSeconds(5))
@@ -56,49 +56,49 @@ public class EbaySteps {
                 driver.findElement(By.id(prop.getProperty("id.btn.gdp.accept"))).click();
                 System.out.println("Banner trovato e chiuso");
             }
-        }catch(NoSuchElementException  | TimeoutException e){
+        } catch (NoSuchElementException | TimeoutException e) {
             System.out.println("Banner non trovato.");
         }
     }
 
-    public List<WebElement> getCategorie(Properties prop){
+    public List<WebElement> getCategorie(Properties prop) {
         return driver.findElement(By.id(prop.getProperty("id.select.category"))).findElements(By.tagName("option"));
     }
 
     public void selezionaCategoria(Properties webProp, String categoria) {
         driver.findElement(By.id(webProp.getProperty("id.select.category"))).click();
-        for(WebElement element : getCategorie(webProp)){
-            if(element.getText().toLowerCase().contains(categoria)){
+        for (WebElement element : getCategorie(webProp)) {
+            if (element.getText().toLowerCase().contains(categoria)) {
                 element.click();
             }
         }
     }
 
-    public String[] getMenuCategory(Properties webProp){
+    public String[] getMenuCategory(Properties webProp) {
         List<WebElement> listaElementi = driver.findElements(By.id(webProp.getProperty("id.select.category")));
         String[] tmp = new String[listaElementi.size()];
 
-        for(int i = 0; i<listaElementi.size() ; i++){
-                tmp[i] = listaElementi.get(i).getText();
+        for (int i = 0; i < listaElementi.size(); i++) {
+            tmp[i] = listaElementi.get(i).getText();
         }
         return tmp;
     }
 
 
-    public ArrayList<ModelloEbay> getElementi(Properties prop){
+    public ArrayList<ModelloEbay> getElementi(Properties prop) {
         ArrayList<ModelloEbay> listaModello = new ArrayList<>();
-        for(WebElement element : driver.findElement(By.xpath(prop.getProperty("xpath.div"))).findElements(By.className("s-item"))){
+        for (WebElement element : driver.findElement(By.xpath(prop.getProperty("xpath.div"))).findElements(By.className("s-item"))) {
             listaModello.add(new ModelloEbay(element.findElement(By.tagName("h3")).getText(),
                     element.findElement(By.className("s-item__subtitle")).getText(),
-                            element.findElement(By.className("s-item__detail--primary")).getText(),
-                                    element.findElement(By.tagName("img")).getAttribute("src")));
+                    element.findElement(By.className("s-item__detail--primary")).getText(),
+                    element.findElement(By.tagName("img")).getAttribute("src")));
         }
         return listaModello;
     }
 
-    public ArrayList<ModelloEbay> getElementiMobile(Properties prop){
+    public ArrayList<ModelloEbay> getElementiMobile(Properties prop) {
         ArrayList<ModelloEbay> listaModello = new ArrayList<>();
-        for(WebElement element : driver.findElement(By.xpath(prop.getProperty("xpath.div"))).findElements(By.className("s-item"))){
+        for (WebElement element : driver.findElement(By.xpath(prop.getProperty("xpath.div"))).findElements(By.className("s-item"))) {
             listaModello.add(new ModelloEbay(element.findElement(By.tagName("h3")).getText(),
                     element.findElement(By.className(prop.getProperty("class.subtitle"))).getText(),
                     element.findElement(By.className(prop.getProperty("class.prize"))).getText(),
@@ -119,7 +119,7 @@ public class EbaySteps {
         ));
         String prezzo = driver.findElement(By.className("vi-bin-primary-price__main-price")).getText();
         val1 = Float.parseFloat(prezzo.substring(1));
-        System.out.println("Prezzo del primo articolo : "+val1);
+        System.out.println("Prezzo del primo articolo : " + val1);
 
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -151,15 +151,15 @@ public class EbaySteps {
         WebElement cart = driver.findElement(By.xpath(prop.getProperty("xpath.totale.carrello")));
         js.executeScript("arguments[0].scrollIntoView();", cart);
 
-        String c = driver.findElement(By.xpath(prop.getProperty("xpath.totale.carrello").substring(1))).getText();
+        String c = driver.findElement(By.xpath(prop.getProperty("xpath.totale.carrello"))).getText().substring(1, 6);
 
-        if(somma != Float.parseFloat(c)){
+        if (somma != Float.parseFloat(c)) {
             return false;
         }
         return true;
     }
 
-    public void add(Properties prop) throws InterruptedException {
+    public void addRem(Properties prop) throws InterruptedException {
 
         driver.findElement(By.xpath(prop.getProperty("xpath.product"))).click();
         Thread.sleep(3000);
@@ -178,15 +178,39 @@ public class EbaySteps {
         Thread.sleep(4000);
         driver.findElement(By.xpath(prop.getProperty("xpath.cart.icon"))).click();
 
-        webElement = driver.findElement(By.xpath(prop.getProperty("xpath.search")));
+        webElement = driver.findElements(By.cssSelector(("input[data-test-id = 'qty-textbox']"))).get(1);
+        //webElement = driver.findElement(By.xpath(prop.getProperty("xpath.search")));
         webElement.clear();
         webElement.sendKeys("2");
         webElement.sendKeys(Keys.ENTER);
-
+        //driver.findElements(By.cssSelector(("input[data-test-id = 'qty-textbox']"))).get(0);
 
         Thread.sleep(4000);
-        driver.findElement(By.xpath(prop.getProperty("xpath.btn.rmv"))).click();
+        driver.findElements(By.cssSelector("button[data-test-id='cart-remove-item']")).get(1).click();
+
+        //Thread.sleep(4000);
+        //driver.findElement(By.xpath(prop.getProperty("xpath.btn.rmv"))).click();
+    }
+
+    public void registrazioneEbay(Properties webProp, String nome,String cognome,String email,String password) {
+        try {
+            Thread.sleep(2000);
+            driver.findElement(By.xpath(webProp.getProperty("menu"))).click();
+            Thread.sleep(3000);
+            driver.findElement(By.xpath(webProp.getProperty("button.register"))).click();
+            Thread.sleep(3000);
+            driver.findElement(By.id(webProp.getProperty("first.name"))).sendKeys(nome);
+            Thread.sleep(3000);
+            driver.findElement(By.id(webProp.getProperty("last.name"))).sendKeys(cognome);
+            Thread.sleep(3000);
+            driver.findElement(By.id(webProp.getProperty("email.id"))).sendKeys(email);
+            Thread.sleep(3000);
+            driver.findElement(By.id(webProp.getProperty("password.id"))).sendKeys(password);
+            Thread.sleep(3000);
+            driver.findElement(By.xpath(webProp.getProperty("button.create.account"))).click();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
-
