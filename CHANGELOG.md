@@ -20,3 +20,4 @@ _`**VERSIONE 1.0**`_
 - **Aggiunti** `test mobile per movimento pagina`
 - **Aggiunti** `test su carrello ebay`
 - **Aggiunti** `i report e gli screen collegati al report`
+- **Aggiunto** `esercizio completo su amazon.it`
