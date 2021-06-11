@@ -1,10 +1,8 @@
 package com.caiata.web;
 
 import com.caiata.steps.AmazonSteps;
-import com.caiata.steps.EbaySteps;
 import com.caiata.utils.DefaulChromeOptions;
 import com.caiata.utils.ManagementDriver;
-import com.caiata.utils.ModelloEbay;
 import com.caiata.utils.Utility;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -12,7 +10,6 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -38,7 +35,7 @@ public class Test_Amazon {
         defaulChromeOptions = new DefaulChromeOptions(new ChromeOptions());
         webProp = new Utility().loadProp("amazon");
         ManagementDriver.startDriver(defaulChromeOptions);
-        driver = ManagementDriver.getDriver();
+        driver = ManagementDriver.getChromeDriver();
         steps = new AmazonSteps();
         extentReports = new ExtentReports(REPORT_PATH + File.separator + "report" + EXT_HTML, false);
         extentReports.loadConfig(new File(REPORT_CONFIG_XML));

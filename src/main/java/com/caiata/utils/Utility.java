@@ -38,7 +38,7 @@ public class Utility {
         try{
             SimpleDateFormat oSDF = new SimpleDateFormat("yyyyMMddHHmm");
             sDate = oSDF.format(new Date());
-            byte[] imageByte = ((TakesScreenshot)ManagementDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
+            byte[] imageByte = ((TakesScreenshot)ManagementDriver.getChromeDriver()).getScreenshotAs(OutputType.BYTES);
             Files.write(Paths.get(SCREENSHOT_PATH + "/" + sDate + ".png"), imageByte);
         }catch(IOException e){
             Assert.fail("Errore: " + e.getMessage());
@@ -49,7 +49,7 @@ public class Utility {
     public static String getScreenBase64(){
         String base64 = null;
         try{
-            base64 = ((TakesScreenshot)ManagementDriver.getDriver()).getScreenshotAs(OutputType.BASE64);
+            base64 = ((TakesScreenshot)ManagementDriver.getChromeDriver()).getScreenshotAs(OutputType.BASE64);
         }catch(Exception e){
             Assert.fail("Errore: " + e.getMessage());
         }
@@ -62,7 +62,7 @@ public class Utility {
         try{
             SimpleDateFormat oSDF = new SimpleDateFormat("yyyyMMddHHmm");
             sDate = oSDF.format(new Date());
-            byte[] imageByte = ((TakesScreenshot)ManagementDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
+            byte[] imageByte = ((TakesScreenshot)ManagementDriver.getChromeDriver()).getScreenshotAs(OutputType.BYTES);
             Files.write(Paths.get(SCREENSHOT_PATH + "/" + sDate + ".png"), imageByte);
             base64 = new String(Base64.encodeBase64(imageByte));
         }catch(IOException e){

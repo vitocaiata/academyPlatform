@@ -46,7 +46,7 @@ public class TestEbay {
 
         webProp = new Utility().loadProp("mobileEbay");
         ManagementDriver.startDriver(defaulChromeOptions);
-        driver = ManagementDriver.getDriver();
+        driver = ManagementDriver.getChromeDriver();
         steps = new EbaySteps();
         extentReports = new ExtentReports(REPORT_PATH + File.separator + "report" + EXT_HTML, false);
         extentReports.loadConfig(new File(REPORT_CONFIG_XML));

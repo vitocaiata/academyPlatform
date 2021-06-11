@@ -32,7 +32,7 @@ public class TestIlMeteo{
         static void beforeAll() {
             ManagementDriver.startDriver(new DefaulChromeOptions(new ChromeOptions()));
             webProp = new Utility().loadProp("ilmeteo");
-            driver = ManagementDriver.getDriver();
+            driver = ManagementDriver.getChromeDriver();
             steps = new IlMeteoSteps();
            // webElement = new WebDriverWait(driver, Duration.ofSeconds(3)).until(driver -> driver.findElement(By.id(("tab" + 1))));
 
@@ -67,7 +67,7 @@ public class TestIlMeteo{
             driver.get(webProp.getProperty("ilmeteo.url"));
             try{
                 for(int i = 1; i <= 14; i++){
-                    webElement = new WebDriverWait(driver, Duration.ofSeconds(3)).until(driver -> driver.findElement(By.id(("tab" + 1))));
+                    webElement = new WebDriverWait(driver, 3).until(driver -> driver.findElement(By.id(("tab" + 1))));
                     //webElement = driver.findElement(By.id(("tab" + 1)));
                     nome = webElement.getText();
                     webElement.click();
@@ -95,7 +95,7 @@ public class TestIlMeteo{
         String nome;
         driver.get(webProp.getProperty("ilmeteo.url"));
         try {
-            webElement = new WebDriverWait(driver, Duration.ofSeconds(3)).until(driver -> driver.findElement(By.id((tab))));
+            webElement = new WebDriverWait(driver,3).until(driver -> driver.findElement(By.id((tab))));
             nome = webElement.getText();
             webElement.click();
             assertTrue(driver.findElement(By.id(webProp.getProperty("id.page.title"))).isEnabled());
@@ -142,7 +142,7 @@ public class TestIlMeteo{
             String elementText = element.getText();
             if(!elementText.equals("Home")){
                 String a = element.getAttribute("href");
-                driver.switchTo().newWindow(WindowType.TAB);
+                //driver.switchTo().newWindow(WindowType.TAB);
                 driver.get(a);
                 //webElement = new WebDriverWait(driver, Duration.ofSeconds(3)).until(driver -> driver.findElement(By.id(webProp.getProperty("id.page.title"))));
                 Thread.sleep(500);

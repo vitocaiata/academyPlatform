@@ -38,7 +38,7 @@ public class Test_WEB_001 {
 
         ManagementDriver.startDriver(defaulChromeOptions);
         posizione = new Posizione();
-        driver = ManagementDriver.getDriver();
+        driver = ManagementDriver.getChromeDriver();
         //webProp = new Utility().loadProp("web");
         webProp = new Utility().loadProp("mobile");
 
@@ -57,8 +57,8 @@ public class Test_WEB_001 {
         String title = "";
         String currentURL = "";
 
-        ManagementDriver.getDriver().get(webProp.getProperty("google.url"));
-        ManagementDriver.getDriver().get(webProp.getProperty("ebay.url"));
+        ManagementDriver.getChromeDriver().get(webProp.getProperty("google.url"));
+        ManagementDriver.getChromeDriver().get(webProp.getProperty("ebay.url"));
 
         title = driver.getTitle();
         currentURL = driver.getCurrentUrl();
@@ -88,13 +88,13 @@ public class Test_WEB_001 {
         int x = 0;
         int y = 0;
 
-        ManagementDriver.getDriver().get(webProp.getProperty("ebay.url"));
+        ManagementDriver.getChromeDriver().get(webProp.getProperty("ebay.url"));
 
-        handleWin = ManagementDriver.getDriver().getWindowHandle();
-        width = ManagementDriver.getDriver().manage().window().getSize().getWidth();
-        height = ManagementDriver.getDriver().manage().window().getSize().getHeight();
-        x = ManagementDriver.getDriver().manage().window().getPosition().getX();
-        y = ManagementDriver.getDriver().manage().window().getPosition().getY();
+        handleWin = ManagementDriver.getChromeDriver().getWindowHandle();
+        width = ManagementDriver.getChromeDriver().manage().window().getSize().getWidth();
+        height = ManagementDriver.getChromeDriver().manage().window().getSize().getHeight();
+        x = ManagementDriver.getChromeDriver().manage().window().getPosition().getX();
+        y = ManagementDriver.getChromeDriver().manage().window().getPosition().getY();
 
         System.out.println("handle window = " + handleWin);
         System.out.println("width = " + width);
@@ -102,19 +102,19 @@ public class Test_WEB_001 {
         System.out.println("Pos x = " + x);
         System.out.println("Pos y = " + y);
 
-        ManagementDriver.getDriver().manage().window().setSize(new Dimension(1024, 768));
-        ManagementDriver.getDriver().manage().window().setPosition(new Point(500, 0));
-        ManagementDriver.getDriver().manage().window().minimize();
-        ManagementDriver.getDriver().manage().window().maximize();
-        ManagementDriver.getDriver().manage().window().fullscreen();
-        ManagementDriver.getDriver().switchTo().newWindow(WindowType.TAB);
-        ManagementDriver.getDriver().get(webProp.getProperty("google.url"));
-        ManagementDriver.getDriver().close();
-        ManagementDriver.getDriver().switchTo().window(handleWin);
-        ManagementDriver.getDriver().switchTo().newWindow(WindowType.WINDOW);
-        ManagementDriver.getDriver().get(webProp.getProperty("google.url"));
-        ManagementDriver.getDriver().close();
-        ManagementDriver.getDriver().switchTo().window(handleWin);
+        ManagementDriver.getChromeDriver().manage().window().setSize(new Dimension(1024, 768));
+        ManagementDriver.getChromeDriver().manage().window().setPosition(new Point(500, 0));
+        //ManagementDriver.getChromeDriver().manage().window().minimize();
+        ManagementDriver.getChromeDriver().manage().window().maximize();
+        ManagementDriver.getChromeDriver().manage().window().fullscreen();
+        //ManagementDriver.getChromeDriver().switchTo().newWindow(WindowType.TAB);
+        ManagementDriver.getChromeDriver().get(webProp.getProperty("google.url"));
+        ManagementDriver.getChromeDriver().close();
+        ManagementDriver.getChromeDriver().switchTo().window(handleWin);
+        //ManagementDriver.getChromeDriver().switchTo().newWindow(WindowType.WINDOW);
+        ManagementDriver.getChromeDriver().get(webProp.getProperty("google.url"));
+        ManagementDriver.getChromeDriver().close();
+        ManagementDriver.getChromeDriver().switchTo().window(handleWin);
     }
 
     @Order(3)

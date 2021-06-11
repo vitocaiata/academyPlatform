@@ -1,6 +1,7 @@
 package com.caiata.utils;
 
 import java.io.File;
+import java.net.URL;
 
 public class GlobalParameters {
 
@@ -10,6 +11,8 @@ public class GlobalParameters {
     // CONTEXT
     public static final String NATIVE_APP								= "NATIVE_APP";
     public static final String WEBVIEW 									= "WEBVIEW";
+
+    public static final String ANDROID                                  = "ANDROID";
 
     // EXT SYSTEM
     public static final String EXT_JPG 									= ".jpg";
@@ -53,6 +56,9 @@ public class GlobalParameters {
     public static final String WINDOWS_SO 								= "Windows";
     public static final String MAC_SO 									= "Mac OS X";
     public static final String LINUX_SO 								= "Linux";
+
+    //APPIUM
+    public static final String SERVER_APPIUM                            ="http://127.0.0.1:4723/wd/hub";
 
     // CHROME DRIVER
     public static final String BASE_CHROME_PATH							= BASE_DRIVER_PATH + "chrome" + File.separator;

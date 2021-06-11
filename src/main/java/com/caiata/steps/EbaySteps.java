@@ -21,7 +21,7 @@ public class EbaySteps {
     private float somma = 0;
     private ModelloEbay modello = new ModelloEbay();
     private WebElement webElement;
-    private WebDriver driver = ManagementDriver.getDriver();
+    private WebDriver driver = ManagementDriver.getChromeDriver();
 
     public void search(Properties prop, String q) {
         webElement = driver.findElement(By.name(prop.getProperty("name.input.search")));

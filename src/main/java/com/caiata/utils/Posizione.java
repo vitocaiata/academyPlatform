@@ -8,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.html5.Location;
 import org.openqa.selenium.html5.LocationContext;
-import org.openqa.selenium.interactions.Actions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Properties;
 
 public class Posizione {
 
-    static private WebDriver driver = ManagementDriver.getDriver();
+    static private WebDriver driver = ManagementDriver.getChromeDriver();
     static private WebElement webElement ;
 
     public void geoLocationTest(Properties prop) throws InterruptedException {
@@ -27,7 +26,7 @@ public class Posizione {
             put("longitude", -122.419416);
             put("accuracy", 0);
         }};
-        driver.executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
+        //driver.executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
         driver.get("http://maps.google.it");
         Thread.sleep(12000);
         driver.findElement(By.xpath(prop.getProperty("xpath.btn.my.location"))).click();

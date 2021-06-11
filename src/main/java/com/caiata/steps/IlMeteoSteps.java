@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class IlMeteoSteps {
     private WebElement webElement;
-    private WebDriver driver = ManagementDriver.getDriver();
+    private WebDriver driver = ManagementDriver.getChromeDriver();
 
     public void search(Properties prop, String q) {
         webElement = driver.findElement(By.id(prop.getProperty("id.input.search")));
@@ -24,7 +24,7 @@ public class IlMeteoSteps {
     public void closeBanner(Properties prop){
         try {
             //Thread.sleep(4000);
-            webElement = new WebDriverWait(driver,Duration.ofSeconds(3)).until(driver -> driver.findElement(By.xpath(prop.getProperty("xpath.banner.cookie"))));
+            webElement = new WebDriverWait(driver,3).until(driver -> driver.findElement(By.xpath(prop.getProperty("xpath.banner.cookie"))));
             //webElement = driver.findElement(By.xpath(prop.getProperty("xpath.banner.cookie")));
             if (webElement.isDisplayed()) {
                 driver.findElement(By.xpath(prop.getProperty("xpath.btn.accept.cookie"))).click();

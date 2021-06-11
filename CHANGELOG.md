@@ -21,3 +21,7 @@ _`**VERSIONE 1.0**`_
 - **Aggiunti** `test su carrello ebay`
 - **Aggiunti** `i report e gli screen collegati al report`
 - **Aggiunto** `esercizio completo su amazon.it`
+
+_`**VERSIONE 2.0**`
+- **Aggiunta** `classe TestMobile e classe MobileSteps`
+- **Aggiunto** `Test su applicazione android`
