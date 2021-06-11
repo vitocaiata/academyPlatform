@@ -71,4 +71,18 @@ public class Utility {
         return "data:image/png;base64," + base64;
     }
 
+    public static String getScreenCastMobile(){
+        String sDate = null;
+        String base64 = null;
+        try{
+            SimpleDateFormat oSDF = new SimpleDateFormat("yyyyMMddHHmm");
+            sDate = oSDF.format(new Date());
+            byte[] imageByte = ((TakesScreenshot)ManagementDriver.getAndroidDriver()).getScreenshotAs(OutputType.BYTES);
+            Files.write(Paths.get(SCREENSHOT_PATH + "/" + sDate + ".png"), imageByte);
+            base64 = new String(Base64.encodeBase64(imageByte));
+        }catch(IOException e){
+            Assert.fail("Errore: " + e.getMessage());
+        }
+        return "data:image/png;base64," + base64;
+    }
 }

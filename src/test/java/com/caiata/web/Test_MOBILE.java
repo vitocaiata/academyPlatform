@@ -60,12 +60,17 @@ public class Test_MOBILE {
         extentTest = extentReports.startTest(testInfo.getDisplayName());
         steps.login(androidProp);
         extentTest.log(LogStatus.INFO, "Inserisco l'username e la password ed effettuo il login.", "");
-        steps.aggiungiUtente(androidProp);
-        extentTest.log(LogStatus.INFO, "Aggiungo utente 'Vito'.", "");
-        steps.eliminaUtenti(androidProp);
-        extentTest.log(LogStatus.INFO, "Elimino tutti gli utenti.", "");
+        if(steps.aggiungiUtente(androidProp)){
+            extentTest.log(LogStatus.INFO, extentTest.addBase64ScreenShot(Utility.getScreenCastMobile()),"Aggiungo utente 'Vito'.");
+        }
+        if(steps.eliminaUtenti(androidProp)){
+            extentTest.log(LogStatus.INFO, extentTest.addBase64ScreenShot(Utility.getScreenCastMobile()),"Elimino tutti gli utenti.");
+        }
         steps.backClear(androidProp);
         extentTest.log(LogStatus.INFO, "Torno alla schermata Login, inserisco i dati e faccio refresh campi.", "");
+        if(steps.errore(androidProp)){
+            extentTest.log(LogStatus.INFO, extentTest.addBase64ScreenShot(Utility.getScreenCastMobile()),"Verifico errore in caso di mancata password.");
+        }
     }
 
     @AfterEach
