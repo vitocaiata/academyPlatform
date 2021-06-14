@@ -3,6 +3,7 @@ package com.caiata.utils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.log4j.BasicConfigurator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.Wait;
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.List;
 
 import static com.caiata.utils.GlobalParameters.*;
 
@@ -80,12 +82,23 @@ public class ManagementDriver {
                 .ignoring(NoSuchElementException.class);
     }
 
-    public static Wait<AndroidDriver> getWaitAndroid(){
-        return new FluentWait<AndroidDriver>(getAndroidDriver())
-                .withTimeout(Duration.ofSeconds(3))
-                .pollingEvery(Duration.ofSeconds(1))
+    public static List<WebElement> waitListAndroidById(String value){
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(getAndroidDriver())
+                .withTimeout(Duration.ofSeconds(50))
+                .pollingEvery(Duration.ofSeconds(5))
                 .ignoring(NoSuchElementException.class);
+        return (List<WebElement>) wait.until(driver -> androidDriver.findElements(By.id(value)));
     }
+
+    public static WebElement waitAndroidById(String value){
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(getAndroidDriver())
+                .withTimeout(Duration.ofSeconds(50))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class);
+        return wait.until(driver -> androidDriver.findElement(By.id(value)));
+    }
+
+
 
     public static Wait<IOSDriver> getWaitIos(){
         return new FluentWait<IOSDriver>(getIosDriver())

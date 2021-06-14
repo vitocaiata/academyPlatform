@@ -26,3 +26,4 @@ _`**VERSIONE 2.0**`
 - **Aggiunta** `classe TestMobile e classe MobileSteps`
 - **Aggiunto** `Test su applicazione android`
 - **Aggiunti** `Test su app`
+- **Aggiunto** `Test su app Bershka`
