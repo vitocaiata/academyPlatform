@@ -67,7 +67,7 @@ public class ManagementDriver {
         mobile = m;
     }
 
-    public static AndroidDriver<?> getAndroidDriver() {
+    public static AndroidDriver getAndroidDriver() {
         return androidDriver;
     }
 
@@ -92,13 +92,11 @@ public class ManagementDriver {
 
     public static WebElement waitAndroidById(String value){
         Wait<WebDriver> wait = new FluentWait<WebDriver>(getAndroidDriver())
-                .withTimeout(Duration.ofSeconds(50))
-                .pollingEvery(Duration.ofSeconds(5))
+                .withTimeout(Duration.ofSeconds(3))
+                .pollingEvery(Duration.ofSeconds(3))
                 .ignoring(NoSuchElementException.class);
         return wait.until(driver -> androidDriver.findElement(By.id(value)));
     }
-
-
 
     public static Wait<IOSDriver> getWaitIos(){
         return new FluentWait<IOSDriver>(getIosDriver())

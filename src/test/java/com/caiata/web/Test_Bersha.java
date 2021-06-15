@@ -1,7 +1,6 @@
 package com.caiata.web;
 
 import com.caiata.steps.BershkaSteps;
-
 import com.caiata.utils.ManagementDriver;
 import com.caiata.utils.Utility;
 import com.relevantcodes.extentreports.ExtentReports;
@@ -10,12 +9,10 @@ import com.relevantcodes.extentreports.LogStatus;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import static com.caiata.utils.GlobalParameters.*;
 import static com.caiata.utils.GlobalParameters.REPORT_CONFIG_XML;
@@ -56,12 +53,22 @@ public class Test_Bersha {
     void test_001(TestInfo testInfo){
         try {
             extentTest = extentReports.startTest(testInfo.getDisplayName());
+            steps.inizializza(androidProp);
             extentTest.log(LogStatus.INFO, "Inizializzo l'app Bershka.", "");
-            steps.threadFunziona(androidProp);
-            //steps.inizializzaApp(androidProp);
-            //Thread.sleep(2000);
-            //steps.clickGo(androidProp);
-            //steps.inizializzaPaese(androidProp);
+
+            steps.addCart(androidProp);
+            extentTest.log(LogStatus.INFO, "Aggiungo al carrello.", "");
+
+            steps.prezzo(androidProp);
+            extentTest.log(LogStatus.INFO, "Confronto prezzo.", "");
+
+            steps.svuotaCarrello(androidProp);
+            extentTest.log(LogStatus.INFO, "Svuoto il carrello.", "");
+
+            extentTest.log(LogStatus.INFO, "Torno indietro.", "");
+            if(steps.indietro(androidProp)) {
+                extentTest.log(LogStatus.INFO, extentTest.addBase64ScreenShot(Utility.getScreenCastMobile()),"Errore nel tornare indietro." );
+            }
         } catch (Exception e) {
             e.printStackTrace();
             fail();
