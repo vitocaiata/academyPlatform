@@ -27,4 +27,4 @@ _`**VERSIONE 2.0**`
 - **Aggiunto** `Test su applicazione android`
 - **Aggiunti** `Test su app`
 - **Aggiunto** `Test su app Bershka`
--**Migliorato** `Codice per test su app Bershka`
+-**Migliorato** `Codice per test su app Bershka` 
