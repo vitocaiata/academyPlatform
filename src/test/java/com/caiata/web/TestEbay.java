@@ -1,10 +1,7 @@
 package com.caiata.web;
 
 import com.caiata.steps.EbaySteps;
-import com.caiata.utils.DefaulChromeOptions;
-import com.caiata.utils.ManagementDriver;
-import com.caiata.utils.ModelloEbay;
-import com.caiata.utils.Utility;
+import com.caiata.utils.*;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -14,9 +11,16 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.Color;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
 import static com.caiata.utils.GlobalParameters.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +32,11 @@ public class TestEbay {
     static private Properties webProp = null;
     static private EbaySteps steps = null;
     static private DefaulChromeOptions defaulChromeOptions;
+    static private DefaultFirefoxOptions defaultFirefoxOptions;
+    static private DefaultEdgeOptions defaultEdgeOptions;
     static private boolean mobile = false;
+    static private boolean firefox = false;
+    static private boolean edge = false;
     static private ExtentReports extentReports;
     static private ExtentTest extentTest;
 
@@ -37,17 +45,54 @@ public class TestEbay {
         ManagementDriver.setMobile(true);
         mobile = ManagementDriver.isMobile();
 
-        defaulChromeOptions = new DefaulChromeOptions(new ChromeOptions());
+        ManagementDriver.setFirefox(false);
+        firefox = ManagementDriver.isFirefox();
 
-        if(mobile){
-            defaulChromeOptions.addArguments("--window-size=375,812");
-            defaulChromeOptions.addArguments("--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1");
+        ManagementDriver.setEdge(true);
+        edge = ManagementDriver.isEdge();
+
+        if(edge){
+            defaultEdgeOptions = new DefaultEdgeOptions(new EdgeOptions());
+            if(mobile){
+                Map<String, String> mobileEmulation = new HashMap<>();
+                mobileEmulation.put("deviceName", "Iphone X");
+                defaultEdgeOptions.setCapability("mobileEmulation", mobileEmulation);
+            }
+
+            webProp = new Utility().loadProp("ebay");
+            ManagementDriver.startEdgeDriver(defaultEdgeOptions);
+            driver = ManagementDriver.getEdgeDriver();
+            steps = new EbaySteps();
+
+        }else if(firefox){
+            defaultFirefoxOptions = new DefaultFirefoxOptions(new FirefoxOptions());
+            if(mobile) {
+                defaultFirefoxOptions.addArguments("--width=275");
+                defaultFirefoxOptions.addArguments("--height=812");
+                FirefoxProfile firefoxProfile = new FirefoxProfile();
+                firefoxProfile.setPreference("general.useragent.override", "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/33.0 Mobile/15E148 Safari/605.1.15");
+                defaultFirefoxOptions.setProfile(firefoxProfile);
+            }
+            webProp = new Utility().loadProp("ebay");
+            ManagementDriver.startFirefoxDriver(defaultFirefoxOptions);
+            driver = ManagementDriver.getFirefoxDriver();
+            steps = new EbaySteps();
+        }else {
+            defaulChromeOptions = new DefaulChromeOptions(new ChromeOptions());
+            if (mobile) {
+                defaulChromeOptions.addArguments("--window-size=375,812");
+                defaulChromeOptions.addArguments("--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1");
+                webProp = new Utility().loadProp("mobileEbay");
+                ManagementDriver.startDriver(defaulChromeOptions);
+                driver = ManagementDriver.getChromeDriver();
+                steps = new EbaySteps();
+            }
+            webProp = new Utility().loadProp("ebay");
+            ManagementDriver.startDriver(defaulChromeOptions);
+            driver = ManagementDriver.getChromeDriver();
+            steps = new EbaySteps();
         }
 
-        webProp = new Utility().loadProp("mobileEbay");
-        ManagementDriver.startDriver(defaulChromeOptions);
-        driver = ManagementDriver.getChromeDriver();
-        steps = new EbaySteps();
         extentReports = new ExtentReports(REPORT_PATH + File.separator + "report" + EXT_HTML, false);
         extentReports.loadConfig(new File(REPORT_CONFIG_XML));
     }
@@ -69,7 +114,8 @@ public class TestEbay {
         steps.search(webProp, q);
         extentTest.log(LogStatus.INFO, "Faccio la ricerca.");
         if(!mobile) {
-            String result = driver.findElement(By.xpath(webProp.getProperty("xpath.span.result"))).getText();
+            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+            String result = driver.findElement(By.cssSelector(".srp-controls__count-heading > span:nth-child(1)")).getText();
             System.out.println(q + " Trovati: " + result);
             if (result.length() < 1) {
                 fail(q + "Risultato non presente.");

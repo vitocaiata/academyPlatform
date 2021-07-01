@@ -1,0 +1,12 @@
+{
+  "name": "com.caiata",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Vito ",
+  "license": "MIT",
+  "devDependencies": {
+    "chalk": "3.0.0",
+    "cucumber-html-reporter": "=5.0.2",
+    "node": "=12.1.0"
+  }
+}

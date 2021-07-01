@@ -72,6 +72,7 @@ public class GlobalParameters {
 
     // INTERNET EXPLORER DRIVER
     public static final String IEXPLORER_DRIVER_PATH				 	= BASE_DRIVER_PATH + "iexplorer" + File.separator + "IEDriverServer" + EXT_EXE;
+    public static final String EDGE_DRIVER_PATH				 	        = BASE_DRIVER_PATH + "edge" + File.separator + "Windows" + File.separator + "msedgedriver" + EXT_EXE;
 
     // REPORT
     public static final String REPORT_PATH 			 					= USER_DIR + File.separator + "report";

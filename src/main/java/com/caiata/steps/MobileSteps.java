@@ -14,15 +14,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MobileSteps {
-
-    static private AndroidDriver<?> androidDriver = ManagementDriver.getAndroidDriver();
-
     public void login(Properties prop) {
         androidDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS) ;
         androidDriver.findElement(By.id(prop.getProperty("app.id.username"))).sendKeys("admin");
         androidDriver.findElement(By.id(prop.getProperty("app.id.psw"))).sendKeys("admin");
         androidDriver.findElement(By.id(prop.getProperty("app.id.btn.login"))).click();
     }
+    static private AndroidDriver<?> androidDriver = ManagementDriver.getAndroidDriver();
+
+
 
     public boolean aggiungiUtente(Properties prop) {
             androidDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS) ;

@@ -8,6 +8,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -18,18 +20,23 @@ import java.time.Duration;
 import java.util.List;
 
 import static com.caiata.utils.GlobalParameters.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class ManagementDriver {
 
+    private static EdgeDriver edgeDriver;
+    private static FirefoxDriver firefoxDriver;
     private static ChromeDriver chromeDriver;
     private static boolean mobile = false;
     private static AndroidDriver<?> androidDriver;
     private static IOSDriver<?> iosDriver;
     private static DesiredCapabilities desiredCapabilities;
+    private static boolean firefox = false;
+    private static boolean edge = false;
 
     public static void startDriver(DefaulChromeOptions defaultChromeOptions){
-            System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH_WIN);
-            System.setProperty("org.freemarker.loggerLibrary", "none");
+        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH_WIN);
+        System.setProperty("org.freemarker.loggerLibrary", "none");
 
         chromeDriver = new ChromeDriver(defaultChromeOptions);
 
@@ -40,9 +47,21 @@ public class ManagementDriver {
         BasicConfigurator.configure();
     }
 
+    public static WebDriver getDriver(){
+        if(firefoxDriver != null){
+            return firefoxDriver;
+        }else if(chromeDriver != null){
+            return chromeDriver;
+        }else if(androidDriver != null){
+            return androidDriver;
+        }else if(edgeDriver !=null){
+            return edgeDriver;
+        }
+        return null;
+    }
+
     public static void startMobileDriver(String platform, DesiredCapabilities desiredCapabilities){
         try {
-
             if(platform.equals("ANDROID")) {
                 androidDriver = new AndroidDriver<WebElement>(new URL(SERVER_APPIUM), desiredCapabilities);
             }else if(platform.equals("IOS")){
@@ -55,6 +74,47 @@ public class ManagementDriver {
         }
     }
 
+    public static void startFirefoxDriver(DefaultFirefoxOptions defaultFirefoxOptions){
+        System.setProperty("webdriver.gecko.driver", FIREFOX_DRIVER_PATH_WIN);
+        System.setProperty("org.freemarker.loggerLibrary", "none");
+
+        firefoxDriver = new FirefoxDriver(defaultFirefoxOptions);
+
+        System.err.close();
+        System.setErr(System.out);
+        new Utility().loadProp("log4j");
+        BasicConfigurator.configure();
+
+    }
+
+    public static void startEdgeDriver(DefaultEdgeOptions defaultEdgeOptions){
+        System.setProperty("webdriver.edge.driver",EDGE_DRIVER_PATH);
+        System.setProperty("org.freemarker.loggerLibrary", "none");
+
+        edgeDriver = new EdgeDriver(defaultEdgeOptions);
+
+        System.err.close();
+        System.setErr(System.out);
+        new Utility().loadProp("log4j");
+        BasicConfigurator.configure();
+    }
+
+    public static EdgeDriver getEdgeDriver() {
+        return edgeDriver;
+    }
+
+    public static WebDriver getFirefoxDriver() {
+        return firefoxDriver;
+    }
+
+    public static boolean isFirefox() {
+        return firefox;
+    }
+
+    public static void setFirefox(boolean firefox) {
+        ManagementDriver.firefox = firefox;
+    }
+
     public static WebDriver getChromeDriver(){
         return chromeDriver;
     }
@@ -65,6 +125,14 @@ public class ManagementDriver {
 
     public static void setMobile(boolean m) {
         mobile = m;
+    }
+
+    public static boolean isEdge() {
+        return edge;
+    }
+
+    public static void setEdge(boolean edge) {
+        ManagementDriver.edge = edge;
     }
 
     public static AndroidDriver getAndroidDriver() {
@@ -107,6 +175,8 @@ public class ManagementDriver {
 
     public static void stopDriver(){
         if(chromeDriver !=null) chromeDriver.quit();
+        if(edgeDriver !=null) edgeDriver.quit();
+        if(firefoxDriver !=null) firefoxDriver.quit();
         if(androidDriver!=null) androidDriver.quit();
         if(iosDriver != null) iosDriver.quit();
     }

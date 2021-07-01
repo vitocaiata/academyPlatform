@@ -4,10 +4,9 @@ gen/
 out/
 target/
 logs/
-screenshot/
 driver/
-report/
 apps/
+screenshot/
 
 # Node DIR
 node_modules/
@@ -38,3 +37,7 @@ out/
 *.iml
 *.ipr
 *.iws
+
+node_modules
+*/node_modules
+/package-lock.json

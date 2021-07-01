@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class EbaySteps {
 
@@ -21,7 +22,7 @@ public class EbaySteps {
     private float somma = 0;
     private ModelloEbay modello = new ModelloEbay();
     private WebElement webElement;
-    private WebDriver driver = ManagementDriver.getChromeDriver();
+    private WebDriver driver = ManagementDriver.getDriver();
 
     public void search(Properties prop, String q) {
         webElement = driver.findElement(By.name(prop.getProperty("name.input.search")));
@@ -87,7 +88,9 @@ public class EbaySteps {
 
     public ArrayList<ModelloEbay> getElementi(Properties prop) {
         ArrayList<ModelloEbay> listaModello = new ArrayList<>();
-        for (WebElement element : driver.findElement(By.xpath(prop.getProperty("xpath.div"))).findElements(By.className("s-item"))) {
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        for (WebElement element : driver.findElement(By.id(prop.getProperty("id.div")))
+                .findElements(By.className("s-item"))) {
             listaModello.add(new ModelloEbay(element.findElement(By.tagName("h3")).getText(),
                     element.findElement(By.className("s-item__subtitle")).getText(),
                     element.findElement(By.className("s-item__detail--primary")).getText(),
